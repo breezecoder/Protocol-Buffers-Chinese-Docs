@@ -38,4 +38,33 @@ package turorial;
 
 在Go语言里，除非你专门定义了go_package，否则package的名称会被用做Go文件的package名称。尽管你在文件中定义了go_package，你依然需要定义一个package来避免Protocol Buffers的命名冲突。当然，在其他非Go语言的环境中也是一样的。
 
-接下来，你定义好了你的message之后。
+接下来，你有了你的message定义。一个message就是一系列有类型的属性（field）的集合。许多简单的数据类型都可以作为属性（field）的类型，包括: bool, int32, float, double和string。通过以其他message作为你的message的属性（field）的方式，你也可以在你的message里添加更多的数据结构。
+
+```
+message Person {
+  string name = 1;
+  int32 id = 2;  // Unique ID number for this person.
+  string email = 3;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+  }
+
+  repeated PhoneNumber phones = 4;
+}
+
+// Our address book file is just one of these.
+message AddressBook {
+  repeated Person people = 1;
+}
+```
+
+在上面的示例中，Person消息（message)包含了PhoneNumber消息(message), 与此同时AddressBook消息（message）包含了Person消息(message)。正如你所见PhoneNumber类型是在Person里面定义的，说明你甚至可以在一个message里嵌套定义另一个message。如果你想要你的属性（field）是预定义值中的一个，你也可以把该属性（field）定义成枚举（enum）类型，比如这里的电话号码可能是MOBILE, HOME 或者 WORK中的一个。
+
