@@ -5,7 +5,7 @@
 * 如何使用protocol buffer编译器
 * 如何使用Java的protocol buffer API来读写消息
 
-这不是一个在Java里使用protocol buffer的完整指南。更多细节请参阅[Protocol Buffer语言指南](Protocol-Buffers-Chinese-Docs/Overview/LanguageGuideProto3.md), [Java API手册](https://developers.google.com/protocol-buffers/docs/reference/java/), [Java代码生成指南](https://developers.google.com/protocol-buffers/docs/reference/java-generated) 和 [编码手册](https://developers.google.com/protocol-buffers/docs/encoding)
+这不是一个在Java里使用protocol buffer的完整指南。更多细节请参阅[Protocol Buffer语言指南](../Overview/LanguageGuideProto3.md), [Java API手册](https://developers.google.com/protocol-buffers/docs/reference/java/), [Java代码生成指南](https://developers.google.com/protocol-buffers/docs/reference/java-generated) 和 [编码手册](https://developers.google.com/protocol-buffers/docs/encoding)
 
 ## 为什么需要使用Protocol Buffers
 
