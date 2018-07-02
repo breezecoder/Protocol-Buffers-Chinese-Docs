@@ -68,3 +68,4 @@ message AddressBook {
 
 在上面的示例中，Person消息（message)包含了PhoneNumber消息(message), 与此同时AddressBook消息（message）包含了Person消息(message)。正如你所见PhoneNumber类型是在Person里面定义的，说明你甚至可以在一个message里嵌套定义另一个message。如果你想要你的属性（field）是预定义值中的一个，你也可以把该属性（field）定义成枚举（enum）类型，比如这里的电话号码可能是MOBILE, HOME 或者 WORK中的一个。
 
+每个元素后面的"=1","=2"以二进制编码的方式做了唯一标识。标识数字1-15编码需要的字节比其他高位数字少，所以从优化的角度，你可以把常用的元素或者repeated元素设置成1-15之间的数字，把16以上的数字留给不常用的可选元素上。每个元素
