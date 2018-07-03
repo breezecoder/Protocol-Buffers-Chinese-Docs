@@ -27,8 +27,51 @@ message SearchRequest {
 
 ### 指定字段规则
 消息字段可以是以下任意一种：
-* 单一字段: 一个结构良好的消息可以有0个或一个该字段（但是不能超过一个）。
-* 重复的字段: 在一个结构良好的消息中，该字段可以重复多次（也可以是0次）。重复的值的顺序会被保留下来。
+* singular: 一个结构良好的消息可以有0个或一个该字段（但是不能超过一个）。
+* repeated: 在一个结构良好的消息中，该字段可以重复多次（也可以是0次）。重复的值的顺序会被保留下来。
+
+在proto3中，标量数字类型的repeated字段默认使用packed编码。
+
+你可以在[这里](https://developers.google.com/protocol-buffers/docs/encoding#packed)了解更多关于packed的信息。
+
+### 添加更多的消息类型
+多个消息类型可以定义在同一个.proto文件中。当你需要定义多个相关的消息时这很有用 -- 比如，你想要定义一个响应消息格式SearchResponse，那么你可以把他添加到同一个.proto文件中。
+```
+message SearchRequest {
+    string query = 1;
+    int32 page_number = 2;
+    int32 result_per_page = 3;
+}
+
+message SearchResponse {
+    ...
+}
+```
+
+### 添加注释
+用C/C++风格（// 或者 /* ... \*/）的注释语法即可为您的.proto文件添加注释。
+```
+/* SearchRequest represents a search query, with pagination options to
+ * indicate which results to include in the response. */
+
+message SearchRequest {
+  string query = 1;
+  int32 page_number = 2;  // Which page number do we want?
+  int32 result_per_page = 3;  // Number of results to return per page.
+}
+```
+
+### 保留字段
+如果你以直接删除一个字段或者注释掉一个字段的方式来更新一个消息类型，那么后面的开发者做修改的时候可以重用这个字段编号。一旦他们加载了老版本的.proto文件，会导致严重的问题：数据错误，隐蔽的bug等等。避免这个问题的一种方法是：把你删除的字段的编号（和/或者名称, 名称也会导致Json序列化的时候出问题）指定为保留字段（reserved）。那么后面的开发者如果使用了这些字段编号或名称，Protocol Buffer编译器就会报错。
+```
+message Foo {
+  reserved 2, 15, 9 to 11;
+  reserved "foo", "bar";
+}
+```
+注意：您不能把字段名称和字段编号放在同一个表达式中。
+
+### 从.proto文件中生成了什么？
 
 
 
